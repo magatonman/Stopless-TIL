@@ -40,3 +40,84 @@
 삭제의 경우, 삭제하고 싶은 노드를 지정하고, 그 노드의 앞/뒤 노드의 연결 관계 역시 수정해야 한다. 앞 노드를 x, 뒤 노드를 y라 하면 x의 뒤 노드를 y로, 역으로 y의 앞 노드를 x로 조정하면 된다.
 
 두 과정 모두 시간 복잡도는 $O(1)$.
+
+### 파이썬에서 이중연결리스트 구현
+
+우선 이중연결리스트의 노드를 구현한다. 노드를 구현할 때는 노드의 원소, 이전 노드 주소, 이후 노드 주소 이 3가지를 구현해야 한다.
+
+```python
+class _Node:
+  __slots__='_element', '_prev', '_next'
+  
+  def __init__(self, element, prev, naxt):
+    self._element=element
+    self._prev=prev
+    self._next=next
+```
+
+이후 초기 상태를 선언하는 __init__ 함수를 정의한다. 이 함수는 header, trailer 노드와 연결리스트의 최초 크기(0)을 정의하며, header와 trailer 노드를 논리적으로 연결한다.
+
+
+```python
+  class _DoublyLinkedBase:
+  
+  class _Node:
+    __slots__='_element', '_prev', '_next'
+
+    def __init__(self, element, prev, naxt):
+      self._element=element
+      self._prev=prev
+      self._next=next
+    
+  def __init__(self):
+    self._header=self._Node(None, None, None)
+    self._trailer=self._Node(None, None, None)
+    self._header._next=self._trailer
+    self._trailer._prev=self._header
+    self._size=0
+```
+
+마지막으로, 연결리스트의 크기를 정의하는 함수와 삽입, 삭제를 담당하는 함수를 생성하면 기초적인 구조체가 완성된다.
+
+```python
+  class _DoublyLinkedBase:
+  
+  class _Node:
+    __slots__='_element', '_prev', '_next'
+
+    def __init__(self, element, prev, naxt):
+      self._element=element
+      self._prev=prev
+      self._next=next
+    
+  def __init__(self):
+    self._header=self._Node(None, None, None)
+    self._trailer=self._Node(None, None, None)
+    self._header._next=self._trailer
+    self._trailer._prev=self._header
+    self._size=0
+  
+ def __len__(self):
+    return self._size
+    
+ def is_empty(self):
+    return self._size==0
+    
+ def _insert._between(self, e, predecessor, successor):
+    newest=self._Node(e, predecessor, successor)
+    predecessor._next=newest
+    successor._prev=newest
+    self._size+=1
+    return newest
+    
+ def _delete_node(self, node):
+  predecesor=node._prev
+  successor=node._next
+  predecessor._next=sucessor
+  successor._prev=predecessor
+  self._size-=1
+  element=node._element
+  node._prev=node._next=node._element=None
+  return element
+```
+
