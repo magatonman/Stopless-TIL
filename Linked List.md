@@ -111,13 +111,13 @@ class _Node:
     return newest
     
  def _delete_node(self, node):
-  predecesor=node._prev
-  successor=node._next
-  predecessor._next=sucessor
-  successor._prev=predecessor
-  self._size-=1
-  element=node._element
-  node._prev=node._next=node._element=None
-  return element
+    predecesor=node._prev
+    successor=node._next
+    predecessor._next=sucessor
+    successor._prev=predecessor
+    self._size-=1
+    element=node._element
+    node._prev=node._next=node._element=None
+    return element
 ```
 
