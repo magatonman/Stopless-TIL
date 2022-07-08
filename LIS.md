@@ -47,3 +47,35 @@ for i in range(len(A)):
     memoization[bisect.bisect_left(memoization, A[i])]=A[i]
 print(len(memoization))
 ```
+
+
+## LIS를 직접 구하기
+
+방법 1의 memoization 배열의 결과는 [1, 2, 2, 3, 1 ,4, 5]다. 즉, 여기서 숫자가 커지는 부분의 값만 찾아서 배열하면 LIS가 된다.
+
+다만 방법 1을 그대로 사용하면 시간복잡도가 커지기 때문에 방법 2를 적당히 개량한다.
+
+기존 과정에 방법 1의 memoization 배열(여기서는 'compare'라고 했음)을 추가하기만 하면 된다.
+
+```python
+import bisect # 이진 탐색 모듈
+A=[2, 4, 3, 6, 1, 7, 9]
+memoization=[1 for i in range(len(A))]
+compare=[A[0]]
+
+for i in range(len(A)):
+  if A[i]>compare[-1]:
+    compare.append(A[i])
+    memoization[i]=len(compare)-1
+  else:
+    memoization[i]=bisect.bisect_left(compare, A[i])
+    compare[memoization[i]]=A[i]
+
+maximum=max(memoization)+1
+ret=[]
+for i in range(len(A)-1, -1, -1):
+  if memoization[i]==maximum-1:
+    ret.append(A[i])
+    maximum=memoization[i]
+print(*ret[::-1])
+```
